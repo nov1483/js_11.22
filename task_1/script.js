@@ -11,6 +11,9 @@ function makeDeepCopy(obj) {
     if(obj instanceof Map) {
         return new Map(obj);
     }
+    if(obj instanceof Array){
+      return new Array(obj)
+    }
     const cloneObject = {};
     for(const i in obj) {
         if (obj[i] instanceof Object) {
