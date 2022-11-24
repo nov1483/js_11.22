@@ -23,7 +23,8 @@ function count() {
   }
   const prev = parseFloat(prevMove);
   const current = parseFloat(currentMove);
-  if(isNaN(prev) || isNaN(current)){
+  const currentRes = resCurrent.innerHTML
+  if(isNaN(prev) || isNaN(current)) {
     return;
   }
   switch(operation) {
@@ -59,15 +60,14 @@ function count() {
       message.innerHTML = `${prev} ÷ ${current} = ${move}`;
       break;
     case '√' :
-       if(current === '0') {
+       if(currentRes === '0') {
         move = '0';
-        operation = undefined;
-        prevMove = '';
+        message.style.color = 'black';
+        message.innerHTML = 'The answer is 0!';
         return;
       }
       move = Math.pow(prev, 1 / current);
       move = fixTheNumber(move);
-     
       message.style.color = 'black';
       message.innerHTML = `${prev} √ ${current} = ${move}`;
       break;
@@ -121,6 +121,9 @@ function fixTheNumber(result) {
   if(afterDot.length > 9) {
     result = result.join('');
     result = Number(result);
+    if(afterDot.includes('e')) {
+      return result = result.toPrecision(8);
+    }
     return result = result.toFixed(8);
   } 
   if(afterDot.length <= 9){
